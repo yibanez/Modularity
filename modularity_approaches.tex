@@ -43,7 +43,7 @@ given a subset of $\Sigma$ of the vocabulary of an ontology, find a (minimal) su
 We are interested in  \emph{logic-based modules}, for which  relevance amounts  to entailment (or model) preservation  over a signature $\Sigma$. %The latter acts as an interface for communication with the ontology in question. 
  That is, when we say that a  subset \Mmc of an ontology \Omc  ``is relevant for''  the terms in $\Sigma$, we mean that all consequences of \Omc  that can be expressed over $\Sigma$ are also consequences of \Mmc. Then \Omc is said to be a conservative extension (CE) of \Mmc.  
  
- Observe that the logical view appears to be theoretically sound and elegant and guarantees that by reusing only terms from $\Sigma$ one is not able to distinguish between importing $\Mmc$ and importing \Omc into some ontology $\Omc'$. However, the decision problem associated to conservative extension is  difficult in general: deciding whether \Omc is a $\Sigma$-conservative extension of $\Omc'$ is 2NEXPTIME-complete for $\ALCQI$ (roughly OWL-Lite) and undecidable for OWL-DL. For model conservative extensions the problem is highly undecidable (non recursively enumerable), even for \ALC.  These computational obstacles have lead, e.g., to approximations via locality.  Locality-based models preserve certain entailments and although they are not minimal, they  have been shown to be useful for economically reusing ontologies.   
+ Observe that the logical view appears to be theoretically sound and elegant and guarantees that by reusing only terms from $\Sigma$ one is not able to distinguish between importing $\Mmc$ and importing \Omc into some ontology $\Pmc'$. However, the decision problem associated to conservative extension is  difficult in general: deciding whether \Omc is a $\Sigma$-conservative extension of $\Omc'$ is 2NEXPTIME-complete for $\ALCQI$ (roughly OWL-Lite) and undecidable for OWL-DL. For model conservative extensions the problem is highly undecidable (non recursively enumerable), even for \ALC.  These computational obstacles have lead, e.g., to approximations via locality.  Locality-based modules provide all logical guaranties of CE-based modules, and  although they are not minimal, they  have been shown to be useful for economically reusing ontologies.   
  
  In the remaining of this paper we will survey locality-based modules as well as other  
  notions and approaches for module extraction. 
@@ -64,12 +64,12 @@ We are interested in  \emph{logic-based modules}, for which  relevance amounts  
 
 Comparison of the various module notions can be carried out examining properties relevant for ontology reuse.  The relevant properties have been identified in the literature and are described below: 
 
-\paragraph{Robustness under vocabulary restrictions.} This property implies that that a module of an ontology w.r.t.\ a signature $\Sigma$ is also a module of this ontology w.r.t.\ any subset of $\Sigma$. This property is important because it means that we do not need to import a different module when we restrict the set of terms that we are interested in. 
+\paragraph{Robustness under vocabulary restrictions.} This property implies  that a module of an ontology w.r.t.\ a signature $\Sigma$ is also a module of this ontology w.r.t.\ any subset of $\Sigma$. This property is important because it means that we do not need to import a different module when we restrict the set of terms that we are interested in. 
 
 \paragraph{Robustness under vocabulary extensions.} This implies that a module of an ontology \Omc w.r.t.\ 
- a signature $\Sigma$ is also a module of \Omc w.r.t.\ any $\Sigma' \supseteq \Sigma$ as long as $\Sigma' \setminus$ does not share terms with \Omc. This means that we do not need to import a different module when extending the set of relevant terms with terms not from \Omc. 
+ a signature $\Sigma$ is also a module of \Omc w.r.t.\ any $\Sigma' \supseteq \Sigma$ as long as $\Sigma' \setminus \Sigma$ does not share terms with \Omc. This means that we do not need to import a different module when extending the set of relevant terms with terms not from \Omc. 
  
-\paragraph{Robustness under replacement for a logic $L$.} This property implies that if \Mmc is a module of \Omc w.r.t.\ $\Sigma$, then the result of importing \Mmc into an $L$-ontology \Omc' is a module of the result of importing \Omc into \Omc'. This is called \emph{module coverage} in the literetarure: importing a module does not affect its property of being a module. 
+\paragraph{Robustness under replacement for a logic $L$.} This property implies that if \Mmc is a module of \Omc w.r.t.\ $\Sigma$, then the result of importing \Mmc into an $L$-ontology $\Omc'$ is a module of the result of importing \Omc into $\Omc'$. This is called \emph{module coverage} in the literature: importing a module does not affect its property of being a module. 
 
 \paragraph{Robustness under joins.} If two ontologies  are indistinguishable w.r.t.\ $\Sigma$ and they share only terms from $\Sigma$, then each of them is indistinguishable from their union w.r.t.\ $\Sigma$. This property together with robustness under replacement, implies that it is not necessary to import two indistinguishable versions of the same ontology. 
 
@@ -82,45 +82,42 @@ There are at least two different notions  of conservative extension in the conte
 \item    $\Omc$ is a \emph{model $\Sigma$-conservative extension ($\Sigma$-mCE)} of $\Omc'$, if for every model $\Imc'$ of $\Omc'$, there exists a model \Imc of \Omc such that $\Imc'|_\Sigma = \Imc|_\Sigma$. 
 %\item 
 \end{enumerate}
-Note that the notion of model conservative extension is strictly stronger that the deductive  one, since it does not depend on the expressiveness of the language $L$. That is $\Omc$ being a $\Sigma$-mCE of \Mmc implies that \Omc is a $\Sigma$-dCE of \Mmc. 
+Note that the notion of model $\Sigma$-conservative extension is strictly stronger than the deductive  one and it does not depend on the expressiveness of the language $L$. That is $\Omc$ being a $\Sigma$-mCE of \Mmc implies that \Omc is a $\Sigma$-dCE of \Mmc. 
 
 \smallskip\noindent
-Another useful notion to characterize  modules is that  of \emph{(model-theoretical) inseparability}.
-Let $\Omc_1$ and $\Omc_2$ be ontologies and $\Sigma$ a signature. Then $\Omc_1$ and $\Omc_2$ are \emph{ $\Sigma$-model inseparable}, written $\Omc_1 \equiv_{\Sigma} \Omc_2$ if, $\{\Imc|_{\Sigma} : \Imc \models \Omc_1\} = \{\Imc|_\Sigma : \Imc \models \Omc_2\}$.  $\Sigma$-model inseparability provides a very strong form of equivalence as $\Omc_1 \equiv_\Sigma \Omc_2$ guarantees that $\Omc_1$ can be replaced with $\Omc_2$ in any application that refers only to symbols from $\Sigma$. Indeed, $\Omc_1 \equiv_\Sigma \Omc_2$ if and only if 
+A more general notion to characterize  modules is that  of \emph{(model-theoretic) inseparability}.
+Let $\Omc_1$ and $\Omc_2$ be ontologies and $\Sigma$ a signature. Then $\Omc_1$ and $\Omc_2$ are \emph{ $\Sigma$-model inseparable}, written $\Omc_1 \equiv^m_{\Sigma} \Omc_2$ if, $\{\Imc|_{\Sigma} : \Imc \models \Omc_1\} = \{\Imc|_\Sigma : \Imc \models \Omc_2\}$.  $\Sigma$-model inseparability provides a very strong form of equivalence as $\Omc_1 \equiv^m_\Sigma \Omc_2$ guarantees that $\Omc_1$ can be replaced with $\Omc_2$ in any application that refers only to symbols from $\Sigma$. Indeed, $\Omc_1 \equiv^m_\Sigma \Omc_2$ if and only if 
 $$\Omc_1 \models \varphi \text{ iff } \Omc_2 \models \varphi$$
 holds for any second order sentence $\varphi$ using only symbols from $\Sigma$.  
 %
-Weaker versions of inseparability relations can be defined. For a given logic $L$, an \emph{inseparability relation} is a family $S = \{\equiv^S_\Sigma \mid \Sigma  \text{ is a signature}\}$ of equivalence relations on the set of $L$ theories. The intuition behind this notion is as follows: $\Tmc_1 \equiv^S_\Sigma \Tmc_2$  means that $\Tmc_1$ and $\Tmc_2$ are indistinguishable w.r.t.\ $\Sigma$, i.e., they represent the same knowledge about the topic represented by $\Sigma$. The precise definition of the inseparability relation determines the exact meaning of the terms ``indistinguishable" and "the same knowledge". $\Mmc$ being a module for $\Sigma$ of \Omc should be equivalent to $\Mmc \subseteq \Omc$ and $\Mmc$ being inseparable w.r.t.\ $\Sigma$ from \Omc. Under the requirement to preserve entailments the following inseparability relations can be defined (in the context of description logics):
+Weaker versions of inseparability relations can be defined. For a given logic $L$, an \emph{inseparability relation} is a family $S = \{\equiv^S_\Sigma \mid \Sigma  \text{ is a signature}\}$ of equivalence relations on the set of $L$ theories. The intuition behind this notion is as follows: $\Omc_1 \equiv^S_\Sigma \Omc_2$  means that $\Omc_1$ and $\Omc_2$ are indistinguishable w.r.t.\ $\Sigma$, i.e., they represent the same knowledge about the topic represented by $\Sigma$. The precise definition of the inseparability relation determines the exact meaning of the terms ``indistinguishable" and ``the same knowledge". $\Mmc$ being a module for $\Sigma$ of \Omc should be equivalent to $\Mmc \subseteq \Omc$ and $\Mmc$ being inseparable w.r.t.\ $\Sigma$ from \Omc. Under the requirement to preserve entailments the following inseparability relations can be defined (in the context of description logics):
 %
 \begin{itemize}
-\item $\Omc_1$ and $\Omc_2$ are $\Sigma$-\emph{concept inseparable}, in symbols $\Omc_1 \equiv^c_\Sigma \Omc_2$, if for all $\Sigma$-concepts $A,B$, it holds that $\Omc_1 \models A \sqsubseteq B$ if and only if $\Omc_2 \models A \sqsubseteq B$.
-\item  $\Omc_1$ and $\Omc_2$ are $\Sigma$-\emph{subsumption inseparable} w.r.t.\ a logic $L$, written $\Omc_1 \equiv^s_\Sigma \Omc_2 $, if for all concepts expressions in $C,D$ in $L$ over $\Sigma$, it holds that $\Omc_1 \models C \sqsubseteq D$ if and only if $ \Omc_2 \models C \sqsubseteq D$.   
+\item $\Omc_1$ and $\Omc_2$ are $\Sigma$-\emph{concept inseparable}, in symbols $\Omc_1 \equiv^c_\Sigma \Omc_2$, if for all  concept names $A,B$ in $\Sigma$, it holds that $\Omc_1 \models A \sqsubseteq B$ if and only if $\Omc_2 \models A \sqsubseteq B$.
+\item  $\Omc_1$ and $\Omc_2$ are $\Sigma$-\emph{subsumption inseparable} w.r.t.\ a logic $L$, written $\Omc_1 \equiv^s_\Sigma \Omc_2 $, if for all concept descriptions  $C,D$ in $L$ over $\Sigma$, it holds that $\Omc_1 \models C \sqsubseteq D$ if and only if $ \Omc_2 \models C \sqsubseteq D$.   
 \end{itemize}
 %
 %%%%%%%%%
-It is easy to see that, for each signature $\Sigma$, it holds that $\equiv_\Sigma \ \subseteq \ \equiv^s_\Sigma \ \subseteq \ \equiv^c_\Sigma$. 
+It is easy to see that, for each signature $\Sigma$, it holds that $\equiv^m_\Sigma \ \subseteq \ \equiv^s_\Sigma \ \subseteq \ \equiv^c_\Sigma$. 
 
 \subsection*{Module Notions}
-Conservative extension and inseparability relations induce modules as follows.  Let $L$ be a logic, \Omc  an ontology, $\Mmc \subseteq \Omc$ and $\Sigma$ a signature. We call \Mmc
+Conservative extension and inseparability relations induce modules as follows.  Let  %$L$ be a logic,
+ \Omc be  an ontology, $\Mmc \subseteq \Omc$ and $\Sigma$ a signature, and $S$\footnote{e.g., $S \in \{m, s, c\}$} an inseparability relation. We call \Mmc
 
 \begin{enumerate}
-\item a \emph{dCE-based (mCE-based) module} for $\Sigma$ of \Omc if \Omc is a $\Sigma$-dCE ($\Sigma$-mCE) of \Mmc w.r.t. $L$
-\item a \emph{$\Sigma$-module} of \Omc in $\Mmc \equiv_\Sigma \Omc$; \footnote{analogous notions can be define  for other inseparability relations}
-\item a \emph{self-contained $\Sigma$-module} of \Omc if $\Mmc  \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \Omc$;
-\item a \emph{depleting $\Sigma$-module}  of \Omc if $  \Omc \setminus \Mmc \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \emptyset $
+%\item a \emph{dCE-based (mCE-based) module} for $\Sigma$ of \Omc if \Omc is a $\Sigma$-dCE ($\Sigma$-mCE) of \Mmc w.r.t. $L$
+\item a \emph{$\Sigma$-module} of \Omc induced by $S$ if $\Mmc \equiv^S_\Sigma \Omc$; 
+%\footnote{analogous notions can be define  for other inseparability relations}
+\item a \emph{self-contained $\Sigma$-module} of \Omc  induced by $S$ if $\Mmc  \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \Omc$;
+\item a \emph{depleting $\Sigma$-module}  of \Omc  induced by $S$  if $  \Omc \setminus \Mmc \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \emptyset$
 \end{enumerate}
+Observe that modules induced by model-theoretic inseparability are  mCE-based modules: for a given signature $\Sigma$,  if $\Mmc \subseteq \Omc$ and $\Mmc \equiv^m_\Sigma \Omc$, then $\Omc$ is a $\Sigma$ mCE of  \Mmc.  In the remaining of this paper  we will focus on modules induced by model-theoretic inseparability. 
 
-%As mentioned earlier, the notion of conservative extensions can be used to define modules in a precise and elegant way. 
-%We start with   conservative extensions-based modules.
-%Let \Omc be an ontology and  $\Sigma \subseteq \mn{Sig}(\Omc)$.
-We say that a  subset $\Mmc \subseteq \Omc$ \emph{covers} all the knowledge that $\Omc$ has about $\Sigma$, if for every axiom $\alpha$  with, $\mn{Sig}(\alpha) \subseteq \Sigma$,  we have that $\Omc \models \alpha$ if and only if $\Mmc \models \alpha$.  Note that in that case   $\Omc$ is a deductive conservative extension of $\Mmc$.  
-%\paragraph{$\Sigma$-modules.} 
-%Let  $\Omc$ be an ontology  and $\Sigma \subseteq \mn{Sig}(\Omc)$, 
-%a subset $\Mmc$ of \Omc is a  \emph{$\Sigma$-module} 
-%if \Omc is a $\Sigma$-CE of \Mmc 
-%Observe that according to the latter notion,  
-%if \Mmc covers all the knowledge that \Omc has about $\Sigma$. 
-We say that \Omc is \emph{safe} for $\Sigma$ if, for every ontology $\Omc'$ with $\mn{Sig}(\Omc)\cap \mn{Sig}(\Omc') \subseteq \Sigma$, we have that $\Omc \cup \Omc'$ is a conservative extension of $\Omc'$; alternatively, this notion can be formulated in terms of separability: an ontology \Omc is safe for a signature $\Sigma$  if and only if $\Tmc \equiv_\Sigma \emptyset$.
+We say that a  subset $\Mmc \subseteq \Omc$ \emph{covers} all the knowledge that $\Omc$ has about $\Sigma$, if for every axiom $\alpha$  with, $\mn{Sig}(\alpha) \subseteq \Sigma$,  we have that $\Omc \models \alpha$ if and only if $\Mmc \models \alpha$.  Note that in that case   $\Omc$ is a $\Sigma$ dCE of $\Mmc$.  
+
+
+%
+We say that \Omc is \emph{safe} for $\Sigma$ if, for every ontology $\Omc'$ with $\mn{Sig}(\Omc)\cap \mn{Sig}(\Omc') \subseteq \Sigma$, we have that $\Omc \cup \Omc'$ is a conservative extension of $\Omc'$; alternatively, this notion can be formulated in terms of inseparability: an ontology \Omc is safe for a signature $\Sigma$  if and only if $\Tmc \equiv^m_\Sigma \emptyset$.
 
 \medskip \noindent
 Observe that if  $\Mmc$ is a depleting $\Sigma$-module of $\Omc$, then  for every ontology $\Omc'$ and every axiom $\alpha$ with $\mn{Sig}(\Omc' \cup \{\alpha \}) \cap \mn{Sig}(\Omc) \subseteq \Sigma$, it holds $\Omc' \cup \Omc \models \alpha$ if and only if  $\Omc' \cup \Mmc \models \alpha$.  
@@ -198,8 +195,8 @@ Note however, that it is always possible to extract a $\Sigma$-module in \Omc. I
  {\bf mCE (dCE)}& \checkmark & \checkmark & \checkmark & \checkmark
  %\multicolumn{4}{c}{\Omc is a mCE (dCE) of \Mmc}
  \\ \midrule
- {\bf inseparability}  & $\Omc \equiv_\Sigma \Mmc$ 
-   & $\Omc \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \Mmc$ &  $\Omc \setminus \Mmc \equiv_{\Sigma \cup \mn{Sig}(\Mmc)}\emptyset$ \\ 
+ {\bf inseparability}  & $\Omc \equiv^m_\Sigma \Mmc$ 
+   & $\Omc \equiv^m_{\Sigma \cup \mn{Sig}(\Mmc)} \Mmc$ &  $\Omc \setminus \Mmc \equiv^m_{\Sigma \cup \mn{Sig}(\Mmc)}\emptyset$ \\ 
    \midrule
    {\bf self-contained} & \XSolidBrush & \checkmark & \checkmark & \checkmark & \checkmark \\ \midrule
    {\bf depleting}  &\XSolidBrush & \XSolidBrush & \checkmark &\checkmark & \checkmark \\ \midrule
@@ -373,11 +370,11 @@ Based on the observations above, algorithms for module extraction from acyclic \
 \item 
 Given an acyclic \EL ontology \Omc and signature $\Sigma$, the decision
 procedure extracts from \Omc the smallest $\Mmc \subseteq \Omc$ such that
-$\Omc \setminus \Mmc \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \emptyset$
+$\Omc \setminus \Mmc \equiv^m_{\Sigma \cup \mn{Sig}(\Mmc)} \emptyset$
 
  then $\Omc \setminus \Mmc$ is safe for $\Sigma \cup \mn{Sig}(\Mmc)$ w.r.t.\ \EL 
 \item Equivalently,
-$\Mmc \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \Omc$.
+$\Mmc \equiv^m_{\Sigma \cup \mn{Sig}(\Mmc)} \Omc$.
 %
 \end{itemize}
  then \Mmc is a depleting $\Sigma$-module in \Omc w.r.t. \EL.
