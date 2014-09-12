@@ -43,6 +43,7 @@ given a subset of $\Sigma$ of the vocabulary of an ontology, find a (minimal) su
 \noindent
 We are interested in  \emph{logic-based modules}, for which  relevance amounts  to entailment (or model) preservation  over a signature $\Sigma$. %The latter acts as an interface for communication with the ontology in question. 
  That is, when we say that a  subset \Mmc of an ontology \Omc  ``is relevant for''  the terms in $\Sigma$, we mean that all consequences of \Omc  that can be expressed over $\Sigma$ are also consequences of \Mmc. Then \Omc is said to be a conservative extension (CE) of \Mmc.  
+ In the module importing scenario, the signature $\Sigma$ acts as the \emph{interface} signature between $\Omc'$ and \Omc in the sense that it contains symbols that $\Omc'$ and $\alpha$  may share with \Omc.
  
  Observe that the logical view appears to be theoretically sound and elegant and guarantees that by reusing only terms from $\Sigma$ one is not able to distinguish between importing $\Mmc$ and importing \Omc into some ontology $\Pmc'$. However, the decision problem associated to conservative extension is  difficult in general: deciding whether \Omc is a $\Sigma$-conservative extension of $\Omc'$ is 2NEXPTIME-complete for $\ALCQI$ (roughly OWL-Lite) and undecidable for OWL-DL. For model conservative extensions the problem is highly undecidable (non recursively enumerable), even for \ALC.  These computational obstacles have lead, e.g., to approximations via locality.  Locality-based modules provide all logical guaranties of CE-based modules, and  although they are not minimal, they  have been shown to be useful for economically reusing ontologies.   
  
@@ -91,7 +92,7 @@ Let $\Omc_1$ and $\Omc_2$ be ontologies and $\Sigma$ a signature. Then $\Omc_1$ 
 $$\Omc_1 \models \varphi \text{ iff } \Omc_2 \models \varphi$$
 holds for any second order sentence $\varphi$ using only symbols from $\Sigma$.  
 %
-Weaker versions of inseparability relations can be defined. For a given logic $L$, an \emph{inseparability relation} is a family $S = \{\equiv^S_\Sigma \mid \Sigma  \text{ is a signature}\}$ of equivalence relations on the set of $L$ theories. The intuition behind this notion is as follows: $\Omc_1 \equiv^S_\Sigma \Omc_2$  means that $\Omc_1$ and $\Omc_2$ are indistinguishable w.r.t.\ $\Sigma$, i.e., they represent the same knowledge about the topic represented by $\Sigma$. The precise definition of the inseparability relation determines the exact meaning of the terms ``indistinguishable" and ``the same knowledge". $\Mmc$ being a module for $\Sigma$ of \Omc should be equivalent to $\Mmc \subseteq \Omc$ and $\Mmc$ being inseparable w.r.t.\ $\Sigma$ from \Omc. Under the requirement to preserve entailments the following inseparability relations can be defined (in the context of description logics):
+Weaker versions of inseparability relations can be defined. For a given logic $L$, an \emph{inseparability relation} is a family $S = \{\equiv^S_\Sigma \mid \Sigma  \text{ is a signature}\}$ of equivalence relations on the set of $L$ theories. The intuition behind this notion is as follows: $\Omc_1 \equiv^S_\Sigma \Omc_2$  means that $\Omc_1$ and $\Omc_2$ are indistinguishable w.r.t.\ $\Sigma$, i.e., they represent the same knowledge about the topic represented by $\Sigma$. The precise definition of the inseparability relation determines the exact meaning of the terms ``indistinguishable" and ``the same knowledge". $\Mmc$ being a module for $\Sigma$ of \Omc should be equivalent to $\Mmc \subseteq \Omc$ and $\Mmc$ being inseparable w.r.t.\ $\Sigma$ from \Omc. Under the requirement to preserve entailments, the following inseparability relations can be defined (in the context of description logics):
 %
 \begin{itemize}
 \item $\Omc_1$ and $\Omc_2$ are $\Sigma$-\emph{concept inseparable}, in symbols $\Omc_1 \equiv^c_\Sigma \Omc_2$, if for all  concept names $A,B$ in $\Sigma$, it holds that $\Omc_1 \models A \sqsubseteq B$ if and only if $\Omc_2 \models A \sqsubseteq B$.
@@ -123,8 +124,7 @@ We say that \Omc is \emph{safe} for $\Sigma$ if, for every ontology $\Omc'$ with
 \medskip \noindent
 Observe that if  $\Mmc$ is a depleting $\Sigma$-module of $\Omc$, then  for every ontology $\Omc'$ and every axiom $\alpha$ with $\mn{Sig}(\Omc' \cup \{\alpha \}) \cap \mn{Sig}(\Omc) \subseteq \Sigma$, it holds $\Omc' \cup \Omc \models \alpha$ if and only if  $\Omc' \cup \Mmc \models \alpha$.  
  
-\medskip \noindent
- In the module importing scenario, the signature $\Sigma$ acts as the \emph{interface} signature between $\Omc'$ and \Omc in the sense that it contains symbols that $\Omc'$ and $\alpha$  may share with \Omc. 
+ 
 % Note also that the ontology $\Omc'$ and the axiom $\alpha$ are formulated in some ontology language $L$, which might not necessarily be a sub-language of OWL-DL. Also, fixing the language $L$ is important since it may well be the case that $\Mmc$ is a module in \Omc w.r.t.\ a language $L_1$, but not w.r.t.\ $L_2$. This might be reasonable in some applications, but not in others (e.g., in the interoperability scenario).   
 %It is therefore more convenient to the  more general notion of a module which abstracts from the particular language under consideration.
 
@@ -134,7 +134,7 @@ Observe that if  $\Mmc$ is a depleting $\Sigma$-module of $\Omc$, then  for ever
 %\paragraph{strong $\Sigma$-modules} Let $\Omc' \subseteq \Omc$ ontologies and $\Sigma $ a signature. $\Omc'$ is a \emph{(strong) $\Sigma$-module in \Omc} if, for every ontology \Pmc with $\mn{Sig}(\Pmc) \cap \mn{Sig}(\Omc) \subseteq \Sigma$, it holds $\Pmc \cup \Omc$ is c conservative extension of $\Pmc \cup \Omc'$ for \mn{Sig}(\Pmc).  
 %\paragraph{Self-contained $\Sigma$-modules.} A \emph{self-contained}
 %
-A ``plain" $\Sigma$-module \Mmc of \Omc covers all knowledge that \Omc has about $\Sigma \cup \mn{Sig}(\Mmc)$.
+A ``plain" $\Sigma$-module \Mmc of \Omc covers all knowledge that \Omc has about $\Sigma$.
 %
 The notion of self-contained module is  stronger than the plain
 $\Sigma$-module notion in that it requires the module to preserve entailments that can
@@ -228,7 +228,8 @@ Due to the computationally difficulty to decide both kinds of CEs, approximation
 
 It has been shown that for   a subset $\Mmc \subseteq \Omc$  all axioms in $\Omc \setminus \Mmc$ being  $\emptyset$-local (or all axioms are $\Delta$-local) w.r.t.\ $\Sigma \cup \mn{sig}(\Mmc)$ it is sufficient for $\Omc$ to be a $\Sigma$-mCE of \Mmc. However, the converse does not hold. The previous result can be also formulated in a more general way as follows. Let $\Omc_1, \Omc_2$ be two ontologies and $\Sigma$ a signature such that $\Omc_2$ is local w.r.t.\ $\Sigma \cup \mn{Sig}(\Omc_1)$,  then $\Omc_1 \cup \Omc_2$ is a $\Sigma$-model conservative extension of $\Omc_1$. 
 
-One can use the standard capabilities of available DL-reasoners for testing ($\emptyset$ ($\Delta$)-locality.  Note, however, that  reasoning on expressive DLs (underlying OWL-DL) is not tractable. In order to achieve \emph{tractable} module extraction,  syntactic approximations of locality have been introduced.   
+One can use the standard capabilities of available DL-reasoners for testing $\emptyset$-locality.  Note, however, that  reasoning on expressive DLs (underlying OWL-DL) is not tractable. Moreover, testing for $\Delta$-locality cannot be done using available reasoners, since it requires the test exceed the expressivity  OWL-DL. 
+In order to achieve \emph{tractable} module extraction,  syntactic approximations of locality have been introduced.   
 %
 %\paragraph{Syntactic Approximations of Locality}
  %It is possible to formulate tractable approximations to the locality conditions for the DL $\Smc\Hmc\Omc\Imc\Qmc$.  
@@ -323,6 +324,11 @@ Modules of \Omc for each of the four locality notions are obtained by starting w
      \end{algorithm}
 %\caption{Locality-based Module Extraction}
 %\end{figure}
+
+  
+
+
+
 \medskip\noindent
 In general, locality based  modules  are not minimal but provide the preservation of certain entailments.  Modules based on syntactic locality can be made small by nesting $\top$-extraction into $\bot$-extraction and vice vera, and the result is still an mCE-based module. 
 %Taken from:  http://owl.cs.manchester.ac.uk/research/modularity/
@@ -419,6 +425,31 @@ Based on the previous result, a variation of the algorithm for \ELI can be obtai
 
 %Thomas
 
+\begin{algorithm}
+       \begin{algorithmic}
+         \vspace*{2pt}
+         \STATE{\textbf{Input:}~  TBox \Tmc,~ signature $\Sigma$}
+         \STATE{\textbf{Output:}~ \Mmc}
+         \vspace*{4pt}
+         \hrule
+         \vspace*{4pt}
+         \STATE{$\Mmc := \emptyset$;}
+         \STATE{$ \Wmc:= \emptyset$;}
+           \WHILE{$(\Tmc \setminus \Mmc) \neq \Wmc$}
+             \vspace*{2pt}
+               \STATE{choose $\alpha \in (\Tmc \setminus \Mmc) \setminus \Wmc$;}
+               \STATE{$\Wmc := \Wmc \cup \alpha$;}
+             \IF{ $\Wmc \not \equiv^m_{\Sigma\cup \mn{Sig}(\Mmc)} \emptyset$}
+              \STATE{$\Mmc:= \Mmc \cup \{\alpha\}$};
+              \STATE{$\Wmc := \emptyset$}
+             \ENDIF
+           \ENDWHILE
+       %  \UNTIL{changed $=$ \texttt{false}}
+        % \STATE{\textbf{return} \Mmc}
+       \end{algorithmic}
+       \caption{Extracting depleting $\Sigma$-modules}
+       \label{alg:x-module}
+     \end{algorithm}
 
 %\subsection*{Inseparability Relations}
 %Deciding whether two \EL-TBoxes are inseparable w.r.t.\ \EL is
@@ -549,7 +580,7 @@ Beside the logic-based module extraction approaches, numerous techniques for ext
 
 An example of such a procedure is the algorithm implemented in the PROMPT-FACTOR tool. Given a signature $\Sigma$ and an ontology \Omc, the algorithm retrieves a fragment $\Mmc$ of \Omc
 A common, and arguably, simple approach to modularize an ontology is to traverse the ontology hierarchy and apply heuristics to identify a \emph{sub-graph} corresponding to a module. 
-However, such approaches do no take into consideration the underlying semantics of the ontology, and hence \emph{do not } generate modules that are \emph{complete}. in the sense that those modules might not  contains all the information \emph{relevant} to the elements of $\Sigma$. 
+However, such approaches do no take into consideration the underlying semantics of the ontology, and hence \emph{do not } generate modules that cover  all the information \emph{relevant} to the elements of $\Sigma$. 
 %That is, that there is no difference in terms of  logical consequences form importing \Mmc versus 
 %\Omc w.r.t.\ $\Sigma$. 
 %
@@ -561,7 +592,7 @@ d'Aquin, Sabou and Motta present an extraction process which forms part of a kno
 
 Seidenberg and Rector developed a technique specifically for the Galen ontology, but it is possible to take the generic core and apply it to any ontology. It takes one or more classes of the ontology as an input, and anything that participates (even indirectly) to the description of an included class is included as well. To reduce the size of the obtained module without losing relevant information, Galen properties are filtered on the base of the property hierarchy. 
 
-Noy and Musen approach is based on the notion of \emph{traversal view extraction}. It is made available via the PROMPT plugin for Prot\'eg\'e. Starting from \emph{one class} of the considered ontology, this approach traverses the relations of this class recursively to include related entities. It can be distinguished rom other approaches in that it is intended as an interactive tool. This allows the used to incrementally build ontology modules by extending the currently extracted one
+Noy and Musen approach is based on the notion of \emph{traversal view extraction}. It is made available via the PROMPT plugin for Prot\'eg\'e. Starting from \emph{one class} of the considered ontology, this approach traverses the relations of this class recursively to include related entities. It can be distinguished from other approaches in that it is intended as an interactive tool. This allows the used to incrementally build ontology modules by extending the currently extracted one
 \end{document}
 
 
