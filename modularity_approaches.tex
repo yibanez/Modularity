@@ -30,6 +30,7 @@
 \usepackage{bbding}
 \usepackage{stmaryrd}
 \usepackage{calc}
+\usepackage{algorithmic,algorithm}
 \newcommand{\ISA}{\sqsubseteq}
 \begin{document}
 \section*{Module Extraction and Importing}
@@ -117,7 +118,7 @@ We say that a  subset $\Mmc \subseteq \Omc$ \emph{covers} all the knowledge that
 
 
 %
-We say that \Omc is \emph{safe} for $\Sigma$ if, for every ontology $\Omc'$ with $\mn{Sig}(\Omc)\cap \mn{Sig}(\Omc') \subseteq \Sigma$, we have that $\Omc \cup \Omc'$ is a conservative extension of $\Omc'$; alternatively, this notion can be formulated in terms of inseparability: an ontology \Omc is safe for a signature $\Sigma$  if and only if $\Tmc \equiv^m_\Sigma \emptyset$.
+We say that \Omc is \emph{safe} for $\Sigma$ if, for every ontology $\Omc'$ with $\mn{Sig}(\Omc)\cap \mn{Sig}(\Omc') \subseteq \Sigma$, we have that $\Omc \cup \Omc'$ is a model $\Sigma$-conservative extension of $\Omc'$; alternatively, this notion can be formulated in terms of inseparability: an ontology \Omc is safe for a signature $\Sigma$  if and only if $\Omc \equiv^m_\Sigma \emptyset$.
 
 \medskip \noindent
 Observe that if  $\Mmc$ is a depleting $\Sigma$-module of $\Omc$, then  for every ontology $\Omc'$ and every axiom $\alpha$ with $\mn{Sig}(\Omc' \cup \{\alpha \}) \cap \mn{Sig}(\Omc) \subseteq \Sigma$, it holds $\Omc' \cup \Omc \models \alpha$ if and only if  $\Omc' \cup \Mmc \models \alpha$.  
@@ -185,30 +186,32 @@ Note however, that it is always possible to extract a $\Sigma$-module in \Omc. I
 %%%%%%%%
 \begin{table}[tb]
 \renewcommand*{\arraystretch}{1.5}
-\begin{sideways}
+%\begin{sideways}
 \begin{small}
 \centering
-\begin{tabular}{cccc|cc} \toprule 
- \multirow{2}{*}{\bf Properties} &\multicolumn{4}{c}{\bf Module Notions}\\ \cline{2-6}
-   & plain    & self-contained & depleting  & $\Delta, \emptyset, \top, \bot, (\top\bot)^*$ and $(\bot\top)^*$ & $\top\bot$, and  $\bot\top$ \\
-   &		&			&			&				 locality-based & locality-based\\ \midrule
- {\bf mCE (dCE)}& \checkmark & \checkmark & \checkmark & \checkmark
+\begin{tabular}{ccccc} \toprule 
+ \multirow{2}{*}{\bf Properties} &\multicolumn{4}{c}{\bf Module Notions}\\ \cline{2-5}
+   & plain    & self-contained & depleting  & 
+   %$\Delta, \emptyset, \top, \bot, (\top\bot)^*$ and $(\bot\top)^*$ 
+    locality based\\
+   %&		&			&	&based		\\ 
+   \midrule
+ {\bf mCE (dCE)}& \checkmark & \checkmark & \checkmark
  %\multicolumn{4}{c}{\Omc is a mCE (dCE) of \Mmc}
  \\ \midrule
  {\bf inseparability}  & $\Omc \equiv^m_\Sigma \Mmc$ 
    & $\Omc \equiv^m_{\Sigma \cup \mn{Sig}(\Mmc)} \Mmc$ &  $\Omc \setminus \Mmc \equiv^m_{\Sigma \cup \mn{Sig}(\Mmc)}\emptyset$ \\ 
    \midrule
-   {\bf self-contained} & \XSolidBrush & \checkmark & \checkmark & \checkmark & \checkmark \\ \midrule
-   {\bf depleting}  &\XSolidBrush & \XSolidBrush & \checkmark &\checkmark & \checkmark \\ \midrule
-   {\bf safety} &  & & &\\ \midrule
-   {\bf robustness voc. restr.} & $\checkmark$ & \checkmark & \checkmark &\checkmark & \XSolidBrush\\    \midrule
-   {\bf robustness voc. ext.} & \checkmark & \checkmark &\checkmark &\checkmark & \XSolidBrush\\ \midrule 
-    {\bf robustness replacement} & \checkmark & \checkmark & \checkmark &\checkmark & \checkmark \\ \midrule
-   {\bf robustness joins} & \checkmark& \checkmark & \checkmark & \checkmark &  \checkmark \\ \midrule
+   {\bf self-contained} & \XSolidBrush & \checkmark & \checkmark & \checkmark  \\ \midrule
+   {\bf depleting}  &\XSolidBrush & \XSolidBrush & \checkmark &\checkmark \\ \midrule
+   {\bf robustness voc. restr.} & $\checkmark$ & \checkmark & \checkmark &\checkmark \\    \midrule
+   {\bf robustness voc. ext.} & \checkmark & \checkmark &\checkmark &\checkmark \\ \midrule 
+    {\bf robustness replacement} & \checkmark & \checkmark & \checkmark &\checkmark \\ \midrule
+   {\bf robustness joins} & \checkmark& \checkmark & \checkmark & \checkmark  \\ \midrule
   % {\bf Complexity issues} & \multicolumn{3}{c}{\par undecidable for most expressive OWL-DL fragments} & {\par Efficiently computable for $\mathcal{SHOIQ}$ DL }  \\ \bottomrule
 \end{tabular}
 \end{small}
-\end{sideways}
+%\end{sideways}
 \caption{Properties of $\Sigma$-modules}
 \label{tab:mod-notions}
 
@@ -288,13 +291,38 @@ Let $\Mmc \subseteq \Omc$ be ontologies and $\Sigma$ a signature. $\Mmc$ is an  
 %
 
 \medskip\noindent
-Modules of \Omc for each of the four locality notions are obtained by starting with an empty set of axioms and subsequently adding axioms from \Omc that are non-local. In order for this procedure to be correct, the signature against with locality is checked has to be extended with the terms in the axiom that is added in each step. $x$-locality based as define above, are always mCE-based (and therefore dCE-based).
+Modules of \Omc for each of the four locality notions are obtained by starting with an empty set of axioms and subsequently adding axioms from \Omc that are non-local. In order for this procedure to be correct, the signature against with locality is checked has to be extended with the terms in the axiom that is added in each step. $x$-locality based modules as define above, are always mCE-based (and therefore dCE-based).
 
-\begin{figure}
-\centering
-\includegraphics[scale=.7]{locality}
-\caption{Locality-based Module Extraction}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[scale=.7]{locality}
+    \begin{algorithm}
+       \begin{algorithmic}
+         \vspace*{2pt}
+         \STATE{\textbf{Input:}~  TBox \Tmc,~ signature $\Sigma$},~ $x \in \{\emptyset,\Delta,\bot,\top\}$
+         \STATE{\textbf{Output:}~ $x$-module \Mmc of \Omc w.r.t.\ $\Sigma$}
+         \vspace*{4pt}
+         \hrule
+         \vspace*{4pt}
+         \STATE{$M \leftarrow \emptyset$;~ $\Tmc' \leftarrow \Tmc$}
+         \REPEAT
+           \STATE{changed $\leftarrow$ \texttt{false}}
+           \FORALL{$\alpha \in \Tmc'$}
+             \vspace*{2pt}
+             \IF{$\alpha$ not $x$-local w.r.t.\ $\Sigma \cup \mn{Sig}(\Mmc)$}
+               \STATE{$\Mmc \leftarrow \Mmc \cup \{\alpha\}$}
+               \STATE{$\Tmc' \leftarrow \Tmc' \setminus \{\alpha\}$}
+               \STATE{changed $\leftarrow$ \texttt{true}}
+             \ENDIF
+           \ENDFOR
+         \UNTIL{changed $=$ \texttt{false}}
+         \STATE{\textbf{return} \Mmc}
+       \end{algorithmic}
+       \caption{Extract a locality-based module}
+       \label{alg:x-module}
+     \end{algorithm}
+%\caption{Locality-based Module Extraction}
+%\end{figure}
 \medskip\noindent
 In general, locality based  modules  are not minimal but provide the preservation of certain entailments.  Modules based on syntactic locality can be made small by nesting $\top$-extraction into $\bot$-extraction and vice vera, and the result is still an mCE-based module. 
 %Taken from:  http://owl.cs.manchester.ac.uk/research/modularity/
@@ -305,22 +333,24 @@ In general, locality based  modules  are not minimal but provide the preservatio
 %called a seed signature of $\Mmc$. 
 
 A locality-based module $\Mmc$ is  a self-contained and depleting $\Sigma$-module.  
-$\top$-locality and $\bot$-locality are sufficient for safety: 
- If an ontology \Omc is $\bot$-local or $\top$-local w.r.t.\  $\Sigma$, then \Omc is safe for $\Sigma$. 
+$x$-locality ($x \in \{\Delta, \emptyset, \top, \bot\}$) %and $\bot$-locality are sufficient 
+is sufficient for safety: 
+ If an ontology \Omc is $x$-local 
+ %or $\top$-local w.r.t.\  $\Sigma$, 
+ then \Omc is safe for $\Sigma$. 
 
 %\medskip \noindent
 %Let $\Omc_1 \subseteq \Omc$ be ontologies and $\Sigma$ a signature. $\Omc_1$ is a $\top$-module ($\bot$-module) for $\Sigma$ in \Omc if $\Omc \setminus \Omc_1$ is $\bot$-local ($\top$-local) w.r.t. $\Sigma \cup \mn{Sig}(\Omc_1)$. 
 
 \subsection*{Other Module Extraction Techniques} 
-For rather unexpressive ontology languages ad-hoc  (minimal) module extraction procedures have been developed. 
+For rather unexpressive ontology languages language specific  (minimal) module extraction procedures have been developed. 
 For the DL $\Emc\Lmc^{+}$  connected reachability-based modules correspond to modules based on syntactic  locality. 
 % Intuitively, a module of an ontology \Omc is a subset $\Mmc \subseteq \Omc$ that preserves an axiom of interest or the axioms over a signature of interest.
 %Formally, for an axiom $\alpha$, $\Mmc$ is an \emph{$\alpha$-module} in \Omc if $\Mmc \models \alpha$ iff $\Omc \models \alpha$.  Further, $\Mmc$ is a module for a signature $\Sigma$ if for every axiom $\alpha$ with $\mn{Sig}(\alpha) \subseteq \Sigma$,  it holds that $\Mmc$ is an $\alpha$-module in \Omc.   
  
 \paragraph{Connected reachability and modules.} Let \Omc be an $\Emc\Lmc^+$ ontology, $\Sigma \subseteq \mn{Sig}(\Omc)$ a signature, and $x, y \in \mn{Sig}(\Omc)$ concept or role names.  $x$ is said to be  connectedly reachable from $\Sigma$ w.r.t.\ \Omc (for short, $\Sigma$-reachable) iff $x\in \Sigma$ or there is an axiom (either GCI or RI ) $\alpha_L \sqsubseteq \alpha_R \in \Omc$ s.t.\ $x \in \mn{Sig}(\alpha_R)$ and, for all $y \in  \mn{Sig}(\alpha_L)$, $y$ is reachable from $\Sigma$. 
 An axiom $\beta_L \sqsubseteq  \beta_R$ is said to be connected reachable from $\Sigma$ w.r.t. \Omc (for
-short, $\Sigma$-reachable) if, for all $x \in  \mn{Sig}(\beta_L)$, $x$ is $\Sigma$-reachable. The \emph{reachability-
-based module for $\Sigma$ in \Omc} is the set of all $\Sigma$-reachable axioms.
+short, $\Sigma$-reachable) if, for all $x \in  \mn{Sig}(\beta_L)$, $x$ is $\Sigma$-reachable. The \emph{reachability-based module for $\Sigma$ in \Omc} is the set of all $\Sigma$-reachable axioms.
 
 Intuitively, $x$ is connectedly reachable from $\{y\}$ w.r.t.\ \Omc means that $y$ syntactically refers to $x$, either directly or indirectly via axioms in \Omc. If $x,y$ are concept names, then the reachability suggests a potential subsumption relationship
 $y \sqsubseteq_\Omc x$.
@@ -328,14 +358,16 @@ $y \sqsubseteq_\Omc x$.
 It has been shown that for an $\EL^+$ ontology and signature $\Sigma$, the subset $\Omc_\Sigma \subseteq$ of all $\Sigma$-reachable axioms can be computed in linear time and that it is the minimal $\bot$ locality-based module w.r.t. $\Sigma$ of \Omc.
 
  \paragraph{Minimal Module Extraction (MEX and AMEX algorithms).} Based on the notion of \emph{depleting $\Sigma$-module}. 
-Recall that a depleting $\Sigma$-module can be defined as a subset of an ontology that is self-contained in the sense that it is $\Sigma$-inseparable from the ontology, where $\Sigma$ is the signature of the module. 
+Recall that a depleting $\Sigma$-module can be defined as a subset of an ontology 
+%that is self-contained in the sense 
+that it is $\Sigma$-inseparable from the ontology, where $\Sigma$ is the signature of the module. 
 
 One of the main features of   $\Sigma$-inseparability is that it is language independent. 
 Indeed, it implies inseparability w.r.t. any standard DL and even SO-logic. 
 However, deciding $\Sigma$-inseparability of ontologies in  fairly restricted scenarios  is undecidable:
 \begin{itemize} 
 \item
-Deciding $\Sigma$-inseparability is undecidable for \ALC-ontologies even if one ontology is acyclic an the other is empty;
+Deciding $\Sigma$-inseparability is undecidable for \ALC-ontologies even if one ontology is acyclic and the other is empty;
 \item For the case of \EL  undecidability is attained  when  one ontology is empty and the other is a general ontology.
 \end{itemize}
 
@@ -358,7 +390,7 @@ $\Sigma$-inseparability  of acyclic $\Emc\Lmc$-TBoxes form the empty TBox is als
 %\end{itemize}
 
 
-Note that if $\Mmc$ is a depleting $\Sigma$-module, then $\Omc \setminus \Mmc$ is safe for $\mn{Sig}(\Mmc)$ and so the module can be maintained separately outside of \Omc without the risk of unintended interaction with the rest of \Omc. Also note that checking depleting $\Sigma$ modules is exactly the same problem as deciding $\Sigma$-inseparability form the empty ontology. 
+Note that if $\Mmc$ is a depleting $\Sigma$-module, then $\Omc \setminus \Mmc$ is safe for $\mn{Sig}(\Mmc)$ and so the module can be maintained separately outside of \Omc without the risk of unintended interaction with the rest of \Omc. Also note that checking depleting $\Sigma$ modules is exactly the same problem as deciding $\Sigma$-inseparability from the empty ontology. 
 % 
 Every depleting module \Mmc of $\Omc$ is inseparable from $\Omc$ for its signature. Thus, an ontology $\Omc$ and its depleting $\Sigma$-module  \Mmc can be equivalently replaced by each other in applications  concerning only $\Sigma$. 
 
@@ -396,59 +428,68 @@ Based on the previous result, a variation of the algorithm for \ELI can be obtai
 %\{ \Imc|_\Sigma | \Imc \models T\} =$ class of all $\Sigma$-models)
 %is undecidable.
 
-\paragraph{Modules for ontology decomposition} These are a special case of $\Sigma$-modules. The definition of this kind of modules is intended to capture the relevant information about a single concept.
- %, and it is based on the following definition.
-
- %
- %This notion of modules is grounded on the semantics of OWL-DL. 
- %
- %Let $\Omc$ be a consistent ontology. An subset  $\Mmc$ of  $\Omc$ is a \emph{logical module} in \Omc if, for every axiom $\alpha$ such that $\mn{Sig}(\alpha) \subseteq \mn{Sig}(\Mmc)$: $$ \Omc \models \alpha \text{ iff } \Mmc \models \alpha$$ 
- 
- \medskip
- \noindent
- A subset  $\Mmc_A$ of  $\Omc$ is a \emph{module for a concept name $A \in \mn{Sig}(\Omc)$}  if
- \begin{enumerate}
- \item  $\Mmc_A$ is a  $\Sigma$-module in \Omc, with $\Sigma = \{A\}$;
-\item  for every concept $B \in \mn{Sig}(\Omc)$,  
-	\begin{itemize}
-	\item $\Mmc_A \models A \ISA B$ iff $\Omc \models A\ISA B $. 
-	\item $\Mmc_A \models B \ISA A$ iff $\Omc \models B \ISA A$.
-	\end{itemize}
-\item There are no concept names $D,E \in \mn{Sig}(\Omc)$ such that $D \in \mn{Sig}(\Mmc_A)$, $E \not \in \mn{Sig}(\Mmc_A)$ and either $\Omc \models D \ISA E$, or $\Omc \models E \ISA D$. 
-\end{enumerate}
-
-Observe that by definition, modules for a concept name are self-contained.  Intuitively, extracting  a module $\Mmc_A$ of (an OWL ontology) \Omc should guarantee  that $A$, as well as all its sub-concepts, super-concepts and instances are included in $\Mmc_A$. 
-%Suntisrivaraporn
+%\paragraph{Modules for ontology decomposition} These are a special case of $\Sigma$-modules. The definition of this kind of modules is intended to capture the relevant information about a single concept.
+% %, and it is based on the following definition.
+%
+% %
+% %This notion of modules is grounded on the semantics of OWL-DL. 
+% %
+% %Let $\Omc$ be a consistent ontology. An subset  $\Mmc$ of  $\Omc$ is a \emph{logical module} in \Omc if, for every axiom $\alpha$ such that $\mn{Sig}(\alpha) \subseteq \mn{Sig}(\Mmc)$: $$ \Omc \models \alpha \text{ iff } \Mmc \models \alpha$$ 
+% 
+% \medskip
+% \noindent
+% A subset  $\Mmc_A$ of  $\Omc$ is a \emph{module for a concept name $A \in \mn{Sig}(\Omc)$}  if
+% \begin{enumerate}
+% \item  $\Mmc_A$ is a  $\Sigma$-module in \Omc, with $\Sigma = \{A\}$;
+%\item  for every concept $B \in \mn{Sig}(\Omc)$,  
+%	\begin{itemize}
+%	\item $\Mmc_A \models A \ISA B$ iff $\Omc \models A\ISA B $. 
+%	\item $\Mmc_A \models B \ISA A$ iff $\Omc \models B \ISA A$.
+%	\end{itemize}
+%\item There are no concept names $D,E \in \mn{Sig}(\Omc)$ such that $D \in \mn{Sig}(\Mmc_A)$, $E \not \in \mn{Sig}(\Mmc_A)$ and either $\Omc \models D \ISA E$, or $\Omc \models E \ISA D$. 
+%\end{enumerate}
+%
+%Observe that by definition, modules for a concept name are self-contained.  Intuitively, extracting  a module $\Mmc_A$ of (an OWL ontology) \Omc should guarantee  that $A$, as well as all its sub-concepts, super-concepts and instances are included in $\Mmc_A$. 
+%%Suntisrivaraporn
 
 \subsection*{Implementations}
 
+In this section we summarize the  module extraction algorithms implementations for OWL ontologies discussed.
 
- Table \ref{tbl:impl} below  summarizes some of the  module extraction algorithms implementations for OWL ontologies discussed.
-\renewcommand*{\arraystretch}{2}
-\newcommand{\cell}[2]{\parbox{\widthof{\scriptsize#2}}{\centering #1\\\scriptsize#2}}%
-\begin{table}[h]
+%\renewcommand*{\arraystretch}{2}
+%\newcommand{\cell}[2]{\parbox{\widthof{\scriptsize#2}}{\centering #1\\\scriptsize#2}}%
+%\begin{table}[h]
 %\begin{sideways}
-\begin{tabular}{ccm{.5\textwidth}}
-\toprule
-{\bf Module Extraction} &{\bf Language} &{\bf{Implementations:}}\\[5pt] \midrule
- Locality-based  & \multirow{2}{*}{ OWL--DL} & OWL API (\url{http://owlapi.sourceforge.net}). For a complete overview of the available methods, see the Javadoc (\url{http://owlapi.sourceforge.net/javadoc/index.html}), in particular the class \texttt{SyntacticLocalityModuleExtractor}.  The relevant classes and interfaces are in the following packages:
+%\begin{tabular}{ccm{.5\textwidth}}
+%\toprule
+\begin{description}
+%{\bf Module Extraction} &{\bf Language} &{\bf{Implementations:}}\\[5pt] \midrule
+ \item[Locality-based.] 
+ %& \multirow{2}{*}{
+  Implementation of locality based module extraction cover OWL--DL and can be found in the   OWL API (\url{http://owlapi.sourceforge.net}). For a complete overview of the available methods, see the Javadoc (\url{http://owlapi.sourceforge.net/javadoc/index.html}), in particular the class \texttt{SyntacticLocalityModuleExtractor}.  The relevant classes and interfaces are in the following packages:
  \begin{itemize}
 \item com.clarkparsia.owlapi.modularity.locality
 \item org.semanticweb.owlapi.modularity
 \item uk.ac.manchester.cs.owlapi.modularity
 \end{itemize}
- \\
- &   & Web Module extractor (\url{http://mowl-power.cs.man.ac.uk:8080/modularity/}) \\ \midrule
+ %\\
+ %&   & 
+ There is also a web-base tool for module extraction that can be found at 
+ %Web Module extractor (
+ \url{http://mowl-power.cs.man.ac.uk:8080/modularity/}
+ %}) \\ \midrule
 %    &  &  & Web module extractor  \\
 %Module for a concept.   & \\
 %model theoretic inseparabiliy & & &\\
-MEX			& OWL-EL acyclic ontologies  & Implemented in OCaml as the MEX command line software ( \url{http://cgi.csc.liv.ac.uk/~konev/software/mex.bin}) \\ 
-AMEX &  \parbox{.2\textwidth}{acyclic $\ALCQI$ Ontologies\\ roughly acyclic OWL-lite ontologies} &  AMEX (\url{http://cgi.csc.liv.ac.uk/~wgatens/software/amex.html}): command line  module extractor written in Java, built with the OWL-API and distributed as a self-contained java jar archive. It requires the 3rd party QBF solver called sKizzo (\url{http://www.skizzo.info/}) for certain parts of the extraction algorithm (see the AMEX web page for more details).\\ \bottomrule
-\end{tabular}
+\item[MEX.] The minimal module extraction implemented in MEX works for OWL-EL acyclic ontologies.  This tool is  implemented in OCaml as a command line software, and can be found at  \url{http://cgi.csc.liv.ac.uk/~konev/software/mex.bin}
+\item[AMEX.] This tool implements minimal module extraction for acyclic $\ALCQI$ Ontologies, which correspond roughly to  acyclic OWL-lite ontologies. The command line tool can be found at \url{http://cgi.csc.liv.ac.uk/~wgatens/software/amex.html}, it is written in Java, built with the OWL-API and distributed as a self-contained java jar archive. It requires the 3rd party QBF solver called sKizzo (\url{http://www.skizzo.info/}) for certain parts of the extraction algorithm (see the AMEX web page for more details).
+\end{description}
+%\\ \bottomrule
+%\end{tabular}
 %\end{sideways}
-\label{tbl:impl}
-\caption{Module Extraction Implementations}
-\end{table}
+%\label{tbl:impl}
+%\caption{Module Extraction Implementations}
+%\end{table}
 %
 %
 %\renewcommand*{\arraystretch}{1.5}
