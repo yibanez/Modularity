@@ -113,42 +113,31 @@ Conservative extension and inseparability relations induce modules as follows.  
 \item a \emph{self-contained $\Sigma$-module} of \Omc  induced by $S$ if $\Mmc  \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \Omc$;
 \item a \emph{depleting $\Sigma$-module}  of \Omc  induced by $S$  if $  \Omc \setminus \Mmc \equiv_{\Sigma \cup \mn{Sig}(\Mmc)} \emptyset$
 \end{enumerate}
-Observe that modules induced by model-theoretic inseparability are  mCE-based modules: for a given signature $\Sigma$,  if $\Mmc \subseteq \Omc$ and $\Mmc \equiv^m_\Sigma \Omc$, then $\Omc$ is a $\Sigma$ mCE of  \Mmc.  In the remaining of this paper  we will focus on modules induced by model-theoretic inseparability. 
+Modules induced by model-theoretic inseparability are  mCE-based modules: for a given signature $\Sigma$,  if $\Mmc \subseteq \Omc$ and $\Mmc \equiv^m_\Sigma \Omc$, then $\Omc$ is a $\Sigma$ mCE of  \Mmc.  In the remaining of this paper  we will focus on modules induced by model-theoretic inseparability. 
 
 We say that a  subset $\Mmc \subseteq \Omc$ \emph{covers} all the knowledge that $\Omc$ has about $\Sigma$, if for every axiom $\alpha$  with, $\mn{Sig}(\alpha) \subseteq \Sigma$,  we have that $\Omc \models \alpha$ if and only if $\Mmc \models \alpha$.  Note that in that case   $\Omc$ is a $\Sigma$ dCE of $\Mmc$.  
-
-
-%
-We say that \Omc is \emph{safe} for $\Sigma$ if, for every ontology $\Omc'$ with $\mn{Sig}(\Omc)\cap \mn{Sig}(\Omc') \subseteq \Sigma$, we have that $\Omc \cup \Omc'$ is a model $\Sigma$-conservative extension of $\Omc'$; alternatively, this notion can be formulated in terms of inseparability: an ontology \Omc is safe for a signature $\Sigma$  if and only if $\Omc \equiv^m_\Sigma \emptyset$.
-
-\medskip \noindent
-Observe that if  $\Mmc$ is a depleting $\Sigma$-module of $\Omc$, then  for every ontology $\Omc'$ and every axiom $\alpha$ with $\mn{Sig}(\Omc' \cup \{\alpha \}) \cap \mn{Sig}(\Omc) \subseteq \Sigma$, it holds $\Omc' \cup \Omc \models \alpha$ if and only if  $\Omc' \cup \Mmc \models \alpha$.  
- 
- 
-% Note also that the ontology $\Omc'$ and the axiom $\alpha$ are formulated in some ontology language $L$, which might not necessarily be a sub-language of OWL-DL. Also, fixing the language $L$ is important since it may well be the case that $\Mmc$ is a module in \Omc w.r.t.\ a language $L_1$, but not w.r.t.\ $L_2$. This might be reasonable in some applications, but not in others (e.g., in the interoperability scenario).   
+%% Note also that the ontology $\Omc'$ and the axiom $\alpha$ are formulated in some ontology language $L$, which might not necessarily be a sub-language of OWL-DL. Also, fixing the language $L$ is important since it may well be the case that $\Mmc$ is a module in \Omc w.r.t.\ a language $L_1$, but not w.r.t.\ $L_2$. This might be reasonable in some applications, but not in others (e.g., in the interoperability scenario).   
 %It is therefore more convenient to the  more general notion of a module which abstracts from the particular language under consideration.
-
-
-
-
 %\paragraph{strong $\Sigma$-modules} Let $\Omc' \subseteq \Omc$ ontologies and $\Sigma $ a signature. $\Omc'$ is a \emph{(strong) $\Sigma$-module in \Omc} if, for every ontology \Pmc with $\mn{Sig}(\Pmc) \cap \mn{Sig}(\Omc) \subseteq \Sigma$, it holds $\Pmc \cup \Omc$ is c conservative extension of $\Pmc \cup \Omc'$ for \mn{Sig}(\Pmc).  
 %\paragraph{Self-contained $\Sigma$-modules.} A \emph{self-contained}
 %
+
 A ``plain" $\Sigma$-module \Mmc of \Omc covers all knowledge that \Omc has about $\Sigma$.
 %
 The notion of self-contained module is  stronger than the plain
 $\Sigma$-module notion in that it requires the module to preserve entailments that can
 be formulated in the interface signature \emph{plus} the signature of the module. That is, it covers all the knowledge that \Omc has about $\Sigma \cup \mn{Sig}(\Mmc)$. 
 %
-On the other hand, for  a \emph{depleting} $\Sigma$-module \Mmc of \Omc,  the difference $\Omc \setminus \Mmc$ has no knowledge about $\Sigma \cup \mn{Sig}(\Mmc)$. 
+Observe that if  $\Mmc$ is a depleting $\Sigma$-module of $\Omc$, then  for every ontology $\Omc'$ and every axiom $\alpha$ with $\mn{Sig}(\Omc' \cup \{\alpha \}) \cap \mn{Sig}(\Omc) \subseteq \Sigma$, it holds $\Omc' \cup \Omc \models \alpha$ if and only if  $\Omc' \cup \Mmc \models \alpha$.  
+In contrast to ``plain'' $\Sigma$-modules,   for a \emph{depleting} $\Sigma$-module \Mmc of \Omc,  the difference $\Omc \setminus \Mmc$ has no knowledge about $\Sigma \cup \mn{Sig}(\Mmc)$. 
 %
 This  means that the difference of \Omc and its module \Mmc does not entail
-any axioms in terms of $\Sigma \cup  \mn{Sig}(\Mmc)$ other than tautologies. The relationship between the different kinds of modules induces by separability relations is as follows. %[Kontchavov et al.,IJCAI09] [Konev et al., JAI 2013]
+any axioms in terms of $\Sigma \cup  \mn{Sig}(\Mmc)$ other than tautologies. The relationship between the different kinds of modules induced by inseparability relations is as follows. %[Kontchavov et al.,IJCAI09] [Konev et al., JAI 2013]
 \begin{itemize}
 \item If \Mmc is a self-contained $\Sigma$-module of \Omc, then it is a (plain) $\Sigma$-module.
-\item If \Mmc is a depleting $\Sigma$-module of \Tmc, then it is a self-contained $\Sigma$-module. 
+\item If \Mmc is a depleting $\Sigma$-module of \Omc, then it is a self-contained $\Sigma$-module. 
 \end{itemize}
-
+We say that \Omc is \emph{safe} for $\Sigma$ if, for every ontology $\Omc'$ with $\mn{Sig}(\Omc)\cap \mn{Sig}(\Omc') \subseteq \Sigma$, we have that $\Omc \cup \Omc'$ is a model $\Sigma$-conservative extension of $\Omc'$; alternatively, this notion can be formulated in terms of inseparability: an ontology \Omc is safe for a signature $\Sigma$  if and only if $\Omc \equiv^m_\Sigma \emptyset$.
 %The notion of depleting module is stronger than self-contained  or the plainÄù $\Sigma$-module notion.
 
 
@@ -221,12 +210,12 @@ Note however, that it is always possible to extract a $\Sigma$-module in \Omc. I
 %-based modules}  
 %Given the undecidability of decision problems underlying (minimal) model extraction (see $\mathbf{T1}$ and $\mathbf{T2}$ above) the notion of locality has been proposed for computing reasonably small modules. 
 
- The logic-based approach for defining modules in terms of  model conservative extensions seems theoretically sound and appropriate to guarantee that reusing only terms from $\Sigma$ one will not be able to distinguish between importing a $\Sigma$mCE (or dCE) module \Mmc of \Omc and importing the whole \Omc.  %It is not possible however, to design a procedure that extracts models based on this condition
+ The logic-based approach for defining modules in terms of  model conservative extensions seems theoretically sound and appropriate to guarantee that reusing only terms from $\Sigma$ one will not be able to distinguish between importing a $\Sigma$-mCE (or dCE) module \Mmc of \Omc and importing the whole \Omc.  %It is not possible however, to design a procedure that extracts models based on this condition
 However,  deciding CEs is computationally expensive in general:  deciding whether two ontologies entail the same concept inclusions over a given signature is usually harder than standard reasoning. 
-Due to the computationally difficulty to decide both kinds of CEs, approximations have been introduced based on the notion of \emph{locality} of a single axioms. Intuitively,  given $\Sigma$, a local axiom can always be satisfied independently of the interpretation of the $\Sigma$-terms, but in a restricted way:  by interpreting all non-$\Sigma$ terms as either the empty set ($\emptyset$-locality) or as the full domain ($\Delta$-locality). In other words, \emph{an axiom $\alpha$ is local w.r.t.\ $\Sigma$} if every trivial expansion of any $\Sigma$-interpretation to $\Sigma \cup \mn{Sig}(\alpha)$ is a model of $\alpha$.
+Due to the computational difficulty to decide both kinds of CEs, approximations have been introduced based on the notion of \emph{locality} of  single axioms. Intuitively,  given $\Sigma$, a local axiom can always be satisfied independently of the interpretation of the $\Sigma$-terms, but in a restricted way:  by interpreting all non-$\Sigma$ terms as either the empty set ($\emptyset$-locality) or as the full domain ($\Delta$-locality). In other words, \emph{an axiom $\alpha$ is local w.r.t.\ $\Sigma$} if every trivial expansion of any $\Sigma$-interpretation to $\Sigma \cup \mn{Sig}(\alpha)$ is a model of $\alpha$.
 %We omit here the precise definition of local axiom. Instead, we note that 
 
-It has been shown that for   a subset $\Mmc \subseteq \Omc$  all axioms in $\Omc \setminus \Mmc$ being  $\emptyset$-local (or all axioms are $\Delta$-local) w.r.t.\ $\Sigma \cup \mn{sig}(\Mmc)$ it is sufficient for $\Omc$ to be a $\Sigma$-mCE of \Mmc. However, the converse does not hold. The previous result can be also formulated in a more general way as follows. Let $\Omc_1, \Omc_2$ be two ontologies and $\Sigma$ a signature such that $\Omc_2$ is local w.r.t.\ $\Sigma \cup \mn{Sig}(\Omc_1)$,  then $\Omc_1 \cup \Omc_2$ is a $\Sigma$-model conservative extension of $\Omc_1$. 
+It has been shown that for   a subset $\Mmc \subseteq \Omc$  all axioms in $\Omc \setminus \Mmc$ being  $\emptyset$-local (or all axioms being $\Delta$-local) w.r.t.\ $\Sigma \cup \mn{sig}(\Mmc)$  is sufficient for $\Omc$ to be a $\Sigma$-mCE of \Mmc. However, the converse does not hold. The previous result can  also be formulated in a more general way as follows. Let $\Omc_1, \Omc_2$ be two ontologies and $\Sigma$ a signature such that $\Omc_2$ is local w.r.t.\ $\Sigma \cup \mn{Sig}(\Omc_1)$,  then $\Omc_1 \cup \Omc_2$ is a $\Sigma$-model conservative extension of $\Omc_1$. 
 
 One can use the standard capabilities of available DL-reasoners for testing $\emptyset$-locality.  Note, however, that  reasoning on expressive DLs (underlying OWL-DL) is not tractable. Moreover, testing for $\Delta$-locality cannot be done using available reasoners, since it requires the test exceed the expressivity  OWL-DL. 
 In order to achieve \emph{tractable} module extraction,  syntactic approximations of locality have been introduced.   
@@ -330,7 +319,7 @@ Modules of \Omc for each of the four locality notions are obtained by starting w
 
 
 \medskip\noindent
-In general, locality based  modules  are not minimal but provide the preservation of certain entailments.  Modules based on syntactic locality can be made small by nesting $\top$-extraction into $\bot$-extraction and vice vera, and the result is still an mCE-based module. 
+In general, locality based  modules  are not minimal but provide the preservation of certain entailments.  Modules based on syntactic locality can be made small by nesting $\top$-extraction into $\bot$-extraction and vice versa, and the result is still an mCE-based module. 
 %Taken from:  http://owl.cs.manchester.ac.uk/research/modularity/
 
 %A locality-based module $\Mmc$ is a subset $\Mmc \subseteq  \Omc$ extracted from \Omc for  signature $\Sigma$, 
@@ -361,14 +350,14 @@ short, $\Sigma$-reachable) if, for all $x \in  \mn{Sig}(\beta_L)$, $x$ is $\Sigm
 Intuitively, $x$ is connectedly reachable from $\{y\}$ w.r.t.\ \Omc means that $y$ syntactically refers to $x$, either directly or indirectly via axioms in \Omc. If $x,y$ are concept names, then the reachability suggests a potential subsumption relationship
 $y \sqsubseteq_\Omc x$.
 
-It has been shown that for an $\EL^+$ ontology and signature $\Sigma$, the subset $\Omc_\Sigma \subseteq$ of all $\Sigma$-reachable axioms can be computed in linear time and that it is the minimal $\bot$ locality-based module w.r.t. $\Sigma$ of \Omc.
+It has been shown that for an $\EL^+$ ontology \Omc and signature $\Sigma$, the subset $\Omc_\Sigma \subseteq \Omc$ of all $\Sigma$-reachable axioms in $\Omc$ can be computed in linear time and that it is the minimal $\bot$ locality-based module w.r.t. $\Sigma$ of \Omc.
 
  \paragraph{Minimal Module Extraction (MEX and AMEX algorithms).} Based on the notion of \emph{depleting $\Sigma$-module}. 
 Recall that a depleting $\Sigma$-module can be defined as a subset of an ontology 
 %that is self-contained in the sense 
 that it is $\Sigma$-inseparable from the ontology, where $\Sigma$ is the signature of the module. 
 
-One of the main features of   $\Sigma$-inseparability is that it is language independent. 
+One of the main features of model theoretic $\Sigma$-inseparability is that it is language independent. 
 Indeed, it implies inseparability w.r.t. any standard DL and even SO-logic. 
 However, deciding $\Sigma$-inseparability of ontologies in  fairly restricted scenarios  is undecidable:
 \begin{itemize} 
